@@ -1,0 +1,10 @@
+sed -n '1,888p' pos.txt > pos1.txt
+sed -n '889,1776p' pos.txt > pos2.txt
+sed -n '1777,2664p' pos.txt > pos3.txt
+sed -n '2665,3552p' pos.txt > pos4.txt
+sed -n '3553,4440p' pos.txt > pos5.txt
+sed -n '1,1097p' neg.txt > neg1.txt
+sed -n '1098,2194p' neg.txt > neg2.txt
+sed -n '2195,3291p' neg.txt > neg3.txt
+sed -n '3292,4338p' neg.txt > neg4.txt
+sed -n '4339,5485p' neg.txt > neg5.txt
