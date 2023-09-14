@@ -5,7 +5,9 @@ BERT models and codes are taken from https://github.com/BioSequenceAnalysis/Bert
 Here the pre-trained BERT model using one amino acid residue as a word.
 
 2. Training model
+
 python3 xgb_retrain.py 
 
 3. Predict
-python3 my_train.py
+
+python3 predict.py
