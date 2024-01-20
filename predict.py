@@ -187,7 +187,11 @@ def DPC(pep):
     return feature, name
 
 
+# Read bert embed features
 def bertfea(file):
+    '''
+    Read bert embed features
+    '''
     feature = []
     import joblib
     idx_sorted = joblib.load('./Bert/CLS.csv')
@@ -249,11 +253,9 @@ def combinefeature(pep, featurelist, dataset):
         # f_dpc = np.average(f_dpc, axis =1)
         a = np.column_stack((a, np.array(f_dpc)))
         fname = fname + name
- 
         
     if 'bertfea' in featurelist:
-        f_bertfea = np.array(bertfea('./bertfea/viral/test/viral_CLS.txt'))
-        #f_bertfea = np.array(bertfea('./shap/B-cell/chen/tr_CLS.txt'))
+        f_bertfea = np.array(bertfea('./model/CLS_fea.txt'))
         a = np.column_stack((a, f_bertfea))
         fname = fname + ['bertfea']*len(f_bertfea)     
 
