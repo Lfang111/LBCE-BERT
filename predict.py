@@ -210,8 +210,11 @@ def readpeptides(input_file):
     #print(pos)
     return seq
 
-
+# Combine multiple features
 def combinefeature(pep, featurelist, dataset):
+    '''
+    Combine multiple features
+    '''
     a=np.empty([len(pep), 1])
     fname=[]
     scaling = StandardScaler()
@@ -310,7 +313,11 @@ def f1_0(y_true, y_pred, labels=None, average='binary', sample_weight=None):
                                                  sample_weight=sample_weight)
     return f
 
+# Select feature combination feature matrix
 def run_training(seq, dataset):
+    '''
+    Select feature combination feature matrix
+    '''
     pep_combined = seq
     # aap aat dpc aac kmer protvec paac qso ctd
     featurelist = ['aac', 'aap', 'aat', 'bertfea']
@@ -322,9 +329,12 @@ def run_training(seq, dataset):
     #target = [1] * len(pos) + [0] * len(neg)
     train(features)
 
+# Reading the model returns the prediction result
 def train(features):
-    with open('./result/virus/aat-aap-aac-bertfea.pickle', 'rb') as fin:
-    #with open('./models/my_model/xgb-viral190.pickle', 'rb') as fin:
+    '''
+    Reading the model returns the prediction result
+    '''
+    with open('./models/xgb.pickle', 'rb') as fin:
         alldata = pickle.load(fin)
     print(alldata.keys())
     model1 = alldata['model']
