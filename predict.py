@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 import joblib
 from sklearn.calibration import CalibratedClassifierCV as cc, calibration_curve
 from Bio import SeqIO
@@ -31,13 +33,18 @@ import argparse
 import pickle, gzip
 import math
 
-
-
-
 protein = PyPro()
 
+def function():
+    '''
+    Predict unknown data sets
+    '''
 
-def readAAP(file):  # read AAP features from the AAP textfile
+# read AAP features from the AAP textfile
+def readAAP(file):  
+    '''
+    read AAP features from the AAP textfile
+    '''
     try:
         aapdic = {}
         aapdata = open(file, 'r')
@@ -50,7 +57,11 @@ def readAAP(file):  # read AAP features from the AAP textfile
         sys.exit()
 
 
-def readAAT(file):  # read AAT features from the AAT textfile
+# read AAT features from the AAT textfile
+def readAAT(file):  
+    '''
+    read AAT features from the AAT textfile
+    '''
     try:
         aatdic = {}
         aatdata = open(file, 'r')
@@ -62,8 +73,11 @@ def readAAT(file):  # read AAT features from the AAT textfile
         print("Error in reading AAT feature file. Please make sure that the AAT file is correctly formatted")
         sys.exit()
 
-
-def aap(pep, aapdic, avg):  # return AAP features for the peptides
+# return AAP features for the peptides
+def aap(pep, aapdic, avg):  
+    '''
+    return AAP features for the peptides
+    '''
     feature = []
     for a in pep:
         # print(a)
@@ -101,8 +115,11 @@ def aap(pep, aapdic, avg):  # return AAP features for the peptides
             feature.append(round(float(averagescore), 4))
     return feature
 
-
-def aat(pep, aatdic, avg):  # return AAT features for the peptides
+# return AAT features for the peptides
+def aat(pep, aatdic, avg):
+    '''
+    return AAT features for the peptides
+    '''
     feature = []
     for a in pep:
         if int(avg) == 0:
@@ -142,7 +159,11 @@ def aat(pep, aatdic, avg):  # return AAT features for the peptides
     return feature
 
 
-def AAC(pep):  # Single Amino Acid Composition feature
+# Single Amino Acid Composition feature
+def AAC(pep):  
+    '''
+    Single Amino Acid Composition feature
+    '''
     feature = []
     for seq in pep:
         protein.ReadProteinSequence(seq)
@@ -151,7 +172,12 @@ def AAC(pep):  # Single Amino Acid Composition feature
         name = list(aac.keys())
     return feature, name
 
-def DPC(pep):  # Dipeptide Composition feature
+
+# Dipeptide Composition feature
+def DPC(pep): 
+    '''
+    Dipeptide Composition feature
+    '''
     feature = []
     for seq in pep:
         protein.ReadProteinSequence(seq)
@@ -160,54 +186,19 @@ def DPC(pep):  # Dipeptide Composition feature
         name = list(dpc.keys())
     return feature, name
 
-def PAAC(pep):
-    feature = []
-    for seq in pep:
-        protein.ReadProteinSequence(seq)
-        #paac=protein.GetMoranAuto()
-        paac = protein.GetPAAC(lamda=4)
-        feature.append(list(paac.values()))
-        name = list(paac.keys())
-    return feature, name
-
-
-def kmer(pep, k):  # Calculate k-mer feature
-    feature = SequenceKmerRep(pep, 'protein', k,norm='l1')
-    return feature
-
-
-def protvec(pep, k, file):  # Calculate ProtVec representation
-    feature = SequenceKmerEmbRep(file, pep, 'protein', k)
-    return feature
-
-'''
-def bertfea(file):
-    feature = []
-    with open(file, 'r') as f:
-        for line in f:
-            line = line.split(',')
-            #feature.append([float(x) for x in line[1:]])
-            feature.append([float(x) for x in line[0:]])
-    #pca = PCA(n_components=190)
-    #pca = PCA(0.85)
-    #pca.fit(feature)
-
-    #pca_model = open('ibce_30_pca.pickle', 'wb')
-    #pickle.dump(pca, pca_model)
-
-    #feature=pca.transform(feature)
-    return feature
-'''
 
 def bertfea(file):
     feature = []
     import joblib
-    idx_sorted = joblib.load('./shap/B-cell/virus/CLS.np')
+    idx_sorted = joblib.load('./Bert/CLS.csv')
     x_test = np.array(pd.read_csv(file,header=None,index_col=None,usecols=[i for i in range(1,769)])) 
     return x_test[:, idx_sorted[:160]]
 
-
-def readpeptides(input_file):  # return the peptides from input peptide list file
+# return the peptides from input peptide list file
+def readpeptides(input_file):  
+    '''
+    return the peptides from input peptide list file
+    '''
     data = open(input_file, 'r')
     seq = []
     for l in data.readlines():
@@ -230,18 +221,15 @@ def combinefeature(pep, featurelist, dataset):
     #pca = PCA(n_components=10)
     #print(a)
     if 'aap' in featurelist:
-        aapdic = readAAP("./models/viral/aap-general.txt.normal")
-        #aapdic = readAAP("./aap/my_aap/aap_minmaxscaler_general.txt")
-        #aapdic = readAAP("./aap/aap-general.txt.normal")
+        aapdic = readAAP("./models/aap-general.txt.normal")
         f_aap = np.array([aap(pep, aapdic, 1)]).T
         a = np.column_stack((a,f_aap))
         #a = scaling.fit_transform(a)
         fname.append('AAP')
         #print(f_aap)
+    
     if 'aat' in featurelist:
-        aatdic = readAAT("./models/viral/aat-general.txt.normal")
-        #aatdic = readAAT("./aat/my_aat/aat_minmaxscaler_general.txt")
-        #aatdic = readAAT("./aat/aat-general.txt.normal")
+        aatdic = readAAT("./models/aat-general.txt.normal")
         f_aat = np.array([aat(pep, aatdic, 1)]).T
         a = np.column_stack((a, f_aat))
         #a = scaling.fit_transform(a)
@@ -259,34 +247,12 @@ def combinefeature(pep, featurelist, dataset):
         a = np.column_stack((a, np.array(f_dpc)))
         fname = fname + name
  
-    if 'paac' in featurelist:
-        f_paac, name = PAAC(pep)
-        #f_paac = pca.fit_transform(f_paac)
-        a = np.column_stack((a, np.array(f_paac)))
-        fname = fname + name
-    
-    if 'kmer' in featurelist:
-        kmers = kmer(pep, 2)
-        #f_kmer = np.array(kmers.X.toarray())
-        f_kmer = np.array(kmers.X.toarray())
-        vocab_name = kmers.vocab
-
-        a = np.column_stack((a, f_kmer))
-        fname = fname + ['kmer']*len(f_kmer)
         
     if 'bertfea' in featurelist:
         f_bertfea = np.array(bertfea('./bertfea/viral/test/viral_CLS.txt'))
         #f_bertfea = np.array(bertfea('./shap/B-cell/chen/tr_CLS.txt'))
         a = np.column_stack((a, f_bertfea))
-        fname = fname + ['bertfea']*len(f_bertfea)
-
-    if 'protvec' in featurelist:
-        # f_protvec = np.array(protvec(pep, 4, './protvec/sp_sequences_4mers_vec.bin').embeddingX)
-        f_protvec = np.array(protvec(pep, 4, './protvec/sp_sequences_4mers_vec.txt').embeddingX)
-        #f_protvec = pickle.load(open("features_protvec.pickle", 'rb'))
-        #f_protvec = np.average(f_protvec, axis =1)
-        a = np.column_stack((a, f_protvec))
-        fname = fname + ['protvec']*len(f_protvec)        
+        fname = fname + ['bertfea']*len(f_bertfea)     
 
     return a[:,1:], fname, vocab_name
 
@@ -399,4 +365,5 @@ if __name__ == "__main__":
     dataset = sys.argv[1]
     seq = readpeptides(dataset)
     #print(pos, neg)
+    print(function.__doc__)
     run_training(seq, dataset)
