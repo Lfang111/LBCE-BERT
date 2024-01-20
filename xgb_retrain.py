@@ -1,4 +1,5 @@
-
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 from sklearn.calibration import CalibratedClassifierCV as cc, calibration_curve
 #from Bio import SeqIO
 from pydpi.pypro import PyPro
@@ -32,8 +33,16 @@ import pandas as pd
 
 protein = PyPro()
 
-
-def readAAP(file):  # read AAP features from the AAP textfile
+def function():
+    '''
+    This part of the function is to cross validate the training model against the data provided.
+    '''
+    
+# read AAP features from the AAP textfile
+def readAAP(file):  
+    '''
+    read AAP features from the AAP textfile
+    '''
     try:
         aapdic = {}
         aapdata = open(file, 'r')
@@ -45,8 +54,11 @@ def readAAP(file):  # read AAP features from the AAP textfile
         print("Error in reading AAP feature file. Please make sure that the AAP file is correctly formatted")
         sys.exit()
 
-
-def readAAT(file):  # read AAT features from the AAT textfile
+# read AAT features from the AAT textfile
+def readAAT(file): 
+    '''
+    read AAT features from the AAT textfile
+    '''
     try:
         aatdic = {}
         aatdata = open(file, 'r')
@@ -58,8 +70,11 @@ def readAAT(file):  # read AAT features from the AAT textfile
         print("Error in reading AAT feature file. Please make sure that the AAT file is correctly formatted")
         sys.exit()
 
-
-def aap(pep, aapdic, avg):  # return AAP features for the peptides
+# return AAP features for the peptides
+def aap(pep, aapdic, avg):  
+    '''
+    return AAP features for the peptides
+    '''
     feature = []
     for a in pep:
         # print(a)
@@ -99,6 +114,9 @@ def aap(pep, aapdic, avg):  # return AAP features for the peptides
 
 
 def aat(pep, aatdic, avg):  # return AAT features for the peptides
+    '''
+    return AAT features for the peptides
+    '''
     feature = []
     for a in pep:
         if int(avg) == 0:
@@ -137,8 +155,11 @@ def aat(pep, aatdic, avg):  # return AAT features for the peptides
             feature.append(round(float(averagescore), 4))
     return feature
 
-
-def CTD(pep):  # Chain-Transition-Ditribution feature
+# Chain-Transition-Ditribution feature
+def CTD(pep):  
+    '''
+    # Chain-Transition-Ditribution feature
+    '''
     feature = []
     name = []
     for seq in pep:
@@ -149,7 +170,11 @@ def CTD(pep):  # Chain-Transition-Ditribution feature
     return feature, name
 
 
-def AAC(pep):  # Single Amino Acid Composition feature
+# Single Amino Acid Composition feature
+def AAC(pep):  
+    '''
+    Single Amino Acid Composition feature
+    '''
     feature = []
     for seq in pep:
         protein.ReadProteinSequence(seq)
@@ -159,83 +184,11 @@ def AAC(pep):  # Single Amino Acid Composition feature
     return feature, name
 
 
-def DPC(pep):  # Dipeptide Composition feature
-    feature = []
-    for seq in pep:
-        protein.ReadProteinSequence(seq)
-        dpc = protein.GetDPComp()
-        feature.append(list(dpc.values()))
-        name = list(dpc.keys())
-    return feature, name
-
-
-def PAAC(pep):
-    feature = []
-    for seq in pep:
-        protein.ReadProteinSequence(seq)
-        #paac=protein.GetMoranAuto()
-        paac = protein.GetPAAC(lamda=4)
-        feature.append(list(paac.values()))
-        name = list(paac.keys())
-    return feature, name
-
-
-def kmer(pep, k):  # Calculate k-mer feature
-    feature = SequenceKmerRep(pep, 'protein', k,norm='l1')
-    return feature
-
-
-def protvec(pep, k, file):  # Calculate ProtVec representation
-    feature = SequenceKmerEmbRep(file, pep, 'protein', k)
-    return feature
-
-#def bertfea(file):
-#    feature = []
-#    with open(file, 'r') as f:
-#        for line in f:
-#            line = line.split(',')
-            #feature.append([float(x) for x in line[1:201]])
-#            feature.append([float(x) for x in line[1:769]])
-    #pca = PCA(n_components=130)
-    #pca = PCA(0.85)
-    #pca.fit(feature)
-     
-    #pca_model = open('ibce_30_pca.pickle', 'wb')
-    #pickle.dump(pca, pca_model)
-
-    #feature=pca.transform(feature)
-#    return feature
-
-
-def FVs_fea(file):
-    feature = []
-    with open(file, 'r') as f:
-        for line in f:
-            line = line.split(',')
-            #feature.append([float(x) for x in line[1:201]])
-            feature.append([float(x) for x in line[1:]])
-    return feature
-
-def QSO(pep):
-    feature = []
-    for seq in pep:
-        protein.ReadProteinSequence(seq)
-        #paac=protein.GetMoranAuto()
-        #qso = protein.GetQSO(maxlag=5)
-        qso = protein.GetQSO(maxlag=10)
-        feature.append(list(qso.values()))
-        name = list(qso.keys())
-    return feature, name
-
-'''
+# Read bert embed features
 def bertfea(file):
-    feature = []
-    import joblib
-    idx_sorted = joblib.load('./shap/B-cell/virus/SARs-2/CLS.np')
-    x_test = np.array(pd.read_csv(file,header=None,index_col=None,usecols=[i for i in range(1,769)]))
-    return x_test[:, idx_sorted[:50]]
 '''
-def bertfea(file):
+Read bert embed features
+'''
     feature = []
     with open(file, 'r') as f:
         for line in f:
@@ -244,7 +197,11 @@ def bertfea(file):
             #feature.append([float(x) for x in line[:]])
     return feature
 
-def readpeptides(posfile, negfile):  # return the peptides from input peptide list file
+# read the peptides from input peptide list file
+def readpeptides(posfile, negfile):  
+    '''
+    read the peptides from input peptide list file
+    '''
     posdata = open(posfile, 'r')
     pos = []
     for l in posdata.readlines():
@@ -264,7 +221,11 @@ def readpeptides(posfile, negfile):  # return the peptides from input peptide li
     return pos, neg
 
 
+# Combine multiple features
 def combinefeature(pep, featurelist, dataset):
+    '''
+    Combine multiple features
+    '''
     a=np.empty([len(pep), 1])
     fname=[]
     scaling = StandardScaler()
@@ -279,40 +240,6 @@ def combinefeature(pep, featurelist, dataset):
         a = np.column_stack((a, np.array(f_dpc)))
         fname = fname + name
     
-    if 'paac' in featurelist:
-        f_paac, name = PAAC(pep)
-        #f_paac = pca.fit_transform(f_paac)
-        a = np.column_stack((a, np.array(f_paac)))
-        fname = fname + name
-    
-    if 'kmer' in featurelist:
-        kmers = kmer(pep, 2)
-        #f_kmer = np.array(kmers.X.toarray())
-        f_kmer = np.array(kmers.X.toarray())
-        vocab_name = kmers.vocab
-
-        a = np.column_stack((a, f_kmer))
-        fname = fname + ['kmer']*len(f_kmer)
-    
-    if 'qso' in featurelist:
-        f_qso, name = QSO(pep)
-        #f_pa = pca.fit_transform(f_paac)
-        a = np.column_stack((a, np.array(f_qso)))
-        fname = fname + name
-
-    if 'ctd' in featurelist:
-        f_ctd, name = CTD(pep)
-        a = np.column_stack((a, np.array(f_ctd)))
-        fname = fname + name 
-    
-    if 'protvec' in featurelist:
-        # f_protvec = np.array(protvec(pep, 4, './protvec/sp_sequences_4mers_vec.bin').embeddingX)
-        f_protvec = np.array(protvec(pep, 4, './protvec/sp_sequences_4mers_vec.txt').embeddingX)
-        #f_protvec = pickle.load(open("features_protvec.pickle", 'rb'))
-        #f_protvec = np.average(f_protvec, axis =1)
-        a = np.column_stack((a, f_protvec))
-        fname = fname + ['protvec']*len(f_protvec)
-
     if 'bertfea' in featurelist:
         #f_bertfea = np.array(bertfea('./bertfea/LBCEPred/train/CLS_fea.txt'))
         f_bertfea = np.array(bertfea('./shap/B-cell/ibce/tr_CLS.txt'))
@@ -339,12 +266,6 @@ def combinefeature(pep, featurelist, dataset):
         a = np.column_stack((a,f_aap))
         #a = scaling.fit_transform(a)
         fname.append('AAP')
-
-    if 'FVs_fea' in featurelist:
-        #f_bertfea = np.array(FVs_fea('./FVs_fea/fea2/tr_fea.txt'))
-        f_bertfea = np.array(FVs_fea('./FVs_fea/viral/train_fvs.txt'))
-        a = np.column_stack((a, f_bertfea))
-        fname = fname + ['FVs_fea']*len(f_bertfea)
 
     return a[:,1:], fname, vocab_name
 
@@ -427,7 +348,12 @@ def f1_0(y_true, y_pred, labels=None, average='binary', sample_weight=None):
     return f
 
 
+# Adjustment of model parameters.
 def gridsearch(x, y, cv):
+    '''
+    Adjustment of model parameters.
+    Cross-validation of training models.
+    '''
     scoring = {'AUPRC':'average_precision',
                 'f1':'f1',
                 'ACC':'accuracy',
@@ -450,8 +376,12 @@ def gridsearch(x, y, cv):
     optimized_GBM.fit(x, y)
     return optimized_GBM
 
-
+# Save the training model and return the model evaluation metrics
 def train(peptides, features, target, pickle_info, dataset):
+    '''
+    Save the training model
+    Returns model evaluation metrics
+    '''
     scaling = StandardScaler()
     scaling.fit(features)
     print(max(features[:,0]))
@@ -476,26 +406,6 @@ def train(peptides, features, target, pickle_info, dataset):
     predict = model.best_estimator_.predict_proba(x)
     data = pd.DataFrame(model.cv_results_)
     data.T.to_csv('all_fold_data.csv')
-    #ff = open('predict.txt', 'w')
-    #ff.write(str([i for i in predict]))
-    #ff.write('\n')
-    #ff.write(str([i for i in y]))
-    #print(predict[:, 1])
-    #newdf = pd.DataFrame({'aap':predict[:, 1]})
-    #newdf.to_csv('aap.csv')
-    #results = model.cv_results_
-    #bi = model.best_index_
-    #print("roc_auc:",results['mean_test_auc_score'][bi],
-    #      "accuracy:",results['mean_test_accuracy'][bi],
-    #      "precision +:",results['mean_test_scores_p_1'][bi],
-    #      "recall +:",results['mean_test_scores_r_1'][bi],
-    #      "f1 +:",results['mean_test_scores_f_1_1'][bi],
-    #      "precision -:",results['mean_test_scores_p_0'][bi],
-    #      "recall -:",results['mean_test_scores_r_0'][bi],
-    #      "f1 -:",results['mean_test_scores_f_1_0'][bi],
-    #      "precision_micro:",results['mean_test_precision_micro'][bi],
-    #      "f1 -:",results['mean_test_precision_macro'][bi],
-    #      "mcc -:",results['mean_test_mcc'][bi])
 
     cv_accracy = model.cv_results_['mean_test_ACC'][model.best_index_]
     cv_auprc = model.cv_results_['mean_test_AUPRC'][model.best_index_]
@@ -528,4 +438,5 @@ if __name__ == "__main__":
     pos, neg = readpeptides("./datasets/training/"+dataset+"/pos.txt",
                             "./datasets/training/"+dataset+"/neg.txt")
     #print(pos, neg)
+    print(function.__doc__)
     run_training(pos, neg, dataset)
