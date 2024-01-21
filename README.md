@@ -32,9 +32,10 @@ Here the pre-trained BERT model using one amino acid residue as a word.
 
 2. Training model
 
-python3 xgb_retrain.py  file_path
-<strong>Note:</strong>  Modify the BERT embedding file at line 224.
-&emsp;&emsp;Read training data positive and negative samples to be two files
+python3 xgb_retrain.py  file_path </br>
+
+<strong>Note:</strong>  Modify the BERT embedding file at line 224.</br>
+&emsp;&emsp;&emsp;Read training data positive and negative samples to be two files.</br>
 
 3. Predict
 
