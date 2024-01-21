@@ -9,7 +9,6 @@
 │&emsp;&emsp;├── Blind387/<br/>
 │&emsp;&emsp;├── Chen/<br/>
 │&emsp;&emsp;└── iBCE-EL_independent/<br/>
-│&emsp; <br/>
 ├── datasets/ - source data<br/>
 │&emsp;&emsp;├── ABCPred/<br/>
 │&emsp;&emsp;├── BCPreds/<br/>
@@ -19,9 +18,7 @@
 │&emsp;&emsp;├── iBCE-EL_independent/<br/>
 │&emsp;&emsp;├── iBCE-EL_training/<br/>
 │&emsp;&emsp;└── training<br/>
-│&emsp; <br/>
 ├── models/ - cross-validate model; aap, aat antigenicity scale<br/> 
-│&emsp; <br/>
 └── pydpi/ - functions for feature calculations (Instructions for use are detailed in pydpi/manual/UserGuide.pdf)<br/>
 
 <h3>Training & Predict</h3>
