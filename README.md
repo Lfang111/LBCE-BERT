@@ -3,24 +3,19 @@
 <h3>Folder Structure</h3>
 ├── train.py - the model is trained by cross-validation<br/>
 ├── predict.py - predict unknown linear BCE<br/>
-├── data/ - anything about data loading goes here
-│   └── loader.py
-│
-├── model/ - pre-trained content encoder model
-│
-├── data/ - default directory for storing experimental datasets
-│
-├── model/ - networks, models and losses
-│   ├── encoder.py
-│   ├── gmm.py
-│   ├── loss.py
-│   ├── model.py
-│   └── transformer.py
-│
-│  
-└── utils/ - small utility functions
-    ├── util.py
-    └── logger.py - set log dir for tensorboard and logging output
+├── datasets/ - source data<br/>
+│   └── loader.py<br/>
+│<br/>
+├── models/ - cross-validate model<br/> 
+│             aap, aat antigenicity scale<br/>
+│<br/>
+├── pydpi/ - functions for feature calculations<br/>
+│            (Instructions for use are detailed in pydpi/manual/UserGuide.pdf)<br/>
+│<br/>
+│<br/>
+└── utils/ - small utility functions<br/>
+    ├── util.py<br/>
+    └── logger.py - set log dir for tensorboard and logging output<br/>
 
 <h3>Training & Predict</h3>
     
