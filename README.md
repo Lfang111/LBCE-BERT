@@ -43,4 +43,5 @@ python3 predict.py  file
 
 <h3>Contact</h3>
 
-Please contact us if you have any further questions.
+Please contact us if you have any further questions.</br>
+Email:438645814@qq.com
