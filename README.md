@@ -25,18 +25,18 @@
 
 <h3>Training & Predict</h3>
     
-1. Extracting BERT embedding
+<h4>1. Extracting BERT embedding</h4>
 
 BERT models and codes are taken from https://github.com/BioSequenceAnalysis/Bert-Protein.<br/>
 Here the pre-trained BERT model using one amino acid residue as a word.
 
-2. Training model
+<h4>2. Training model</h4>
 
 python3 xgb_retrain.py  file_path </br>
 
 <strong>Note:</strong>  Modify the BERT embedding file at line 224.</br>
 &emsp;&emsp;&emsp;Read training data positive and negative samples to be two files.</br>
 
-3. Predict
+<h4>3. Predict</h4>
 
 python3 predict.py  file
