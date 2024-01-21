@@ -4,27 +4,24 @@
 ├── train.py - the model is trained by cross-validation<br/>
 ├── predict.py - predict unknown linear BCE<br/>
 ├── bertfea/ - BERT embedding<br/> 
-│&emsp;├── ABCPred/<br/>
-│&emsp;├── BCPreds/<br/>
-│&emsp;├── Blind387/<br/>
-│&emsp;├── Chen/<br/>
-│&emsp;└── iBCE-EL_independent/<br/>
-│ <br/>
+│&emsp;&emsp;├── ABCPred/<br/>
+│&emsp;&emsp;├── BCPreds/<br/>
+│&emsp;&emsp;├── Blind387/<br/>
+│&emsp;&emsp;├── Chen/<br/>
+│&emsp;&emsp;└── iBCE-EL_independent/<br/>
+│&emsp; <br/>
 ├── datasets/ - source data<br/>
-│&emsp;├── ABCPred/<br/>
-│&emsp;├── BCPreds/<br/>
-│&emsp;├── Blind387/<br/>
-│&emsp;├── Chen/<br/>
-│&emsp;├── LBtope/<br/>
-│&emsp;├── iBCE-EL_independent/<br/>
-│&emsp;├── iBCE-EL_training/<br/>
-│&emsp;└── training<br/>
-│ <br/>
+│&emsp;&emsp;├── ABCPred/<br/>
+│&emsp;&emsp;├── BCPreds/<br/>
+│&emsp;&emsp;├── Blind387/<br/>
+│&emsp;&emsp;├── Chen/<br/>
+│&emsp;&emsp;├── LBtope/<br/>
+│&emsp;&emsp;├── iBCE-EL_independent/<br/>
+│&emsp;&emsp;├── iBCE-EL_training/<br/>
+│&emsp;&emsp;└── training<br/>
+│&emsp; <br/>
 ├── models/ - cross-validate model; aap, aat antigenicity scale<br/> 
-│ <br/>
-├── pydpi/ - functions for feature calculations (Instructions for use are detailed in pydpi/manual/UserGuide.pdf)<br/>
-│ <br/>
-│ <br/>
+│&emsp; <br/>
 └── pydpi/ - functions for feature calculations (Instructions for use are detailed in pydpi/manual/UserGuide.pdf)<br/>
 
 <h3>Training & Predict</h3>
