@@ -241,8 +241,7 @@ def combinefeature(pep, featurelist, dataset):
         fname = fname + name
     
     if 'bertfea' in featurelist:
-        #f_bertfea = np.array(bertfea('./bertfea/LBCEPred/train/CLS_fea.txt'))
-        f_bertfea = np.array(bertfea('./shap/B-cell/ibce/tr_CLS.txt'))
+        f_bertfea = np.array(bertfea('./bertfea/BCPreds/CLS_fea.txt'))
         a = np.column_stack((a, f_bertfea))
         fname = fname + ['bertfea']*len(f_bertfea)
         
@@ -252,16 +251,14 @@ def combinefeature(pep, featurelist, dataset):
         fname = fname + name
 
     if 'aat' in featurelist:
-        #aatdic = readAAT("./aat/my_aat/all_lbce_data/aat_minmaxscaler_general.txt")
-        aatdic = readAAT("./models/ibce/aat-general.txt.normal")
+        aatdic = readAAT("./models/aat-general.txt.normal")
         f_aat = np.array([aat(pep, aatdic, 1)]).T
         a = np.column_stack((a, f_aat))
         #a = scaling.fit_transform(a)
         fname.append('AAT')
 
     if 'aap' in featurelist:
-        #aapdic = readAAP("./aap/my_aap/all_lbce_data/aap_minmaxscaler_general.txt")
-        aapdic = readAAP("./models/ibce/aap-general.txt.normal")
+        aapdic = readAAP("./models/aap-general.txt.normal")
         f_aap = np.array([aap(pep, aapdic, 1)]).T
         a = np.column_stack((a,f_aap))
         #a = scaling.fit_transform(a)
@@ -275,10 +272,8 @@ def run_training(pos, neg, dataset):
     pickle_info={}
     #print(pep_combined)
     # aap aat dpc aac kmer protvec paac qso ctd
-    #featurelist = ['aac', 'paac', 'dpc', 'aat', 'bertfea']
     featurelist = ['aac', 'aap', 'aat', 'bertfea']
     print(featurelist)
-    # featurelist = ['aac','aap','aat','protvec']
     pickle_info['featurelist'] = featurelist
     features, fname, vocab = combinefeature(pep_combined, featurelist, dataset) # 'aap', 'aat', 'aac' 
     print(len(features[0]))
@@ -390,17 +385,15 @@ def train(peptides, features, target, pickle_info, dataset):
     y = np.array(target)
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=19)
     model = gridsearch(x, y, cv)
-    #aapdic = readAAP("./training/"+dataset+"/aap-general.txt.normal")
-    aapdic = readAAP("./models/ibce/aap-general.txt.normal")
-    #aatdic = readAAT("./training/"+dataset+"/aat-general.txt.normal")
-    aatdic = readAAT("./models/ibce/aat-general.txt.normal")
+    aapdic = readAAP("./models/aap-general.txt.normal")
+    aatdic = readAAT("./models/aat-general.txt.normal")
     pickle_info ['aap'] = aapdic
     pickle_info ['aat'] = aatdic
     pickle_info ['scaling'] = scaling
     pickle_info ['model'] = model
     pickle_info ['training_features'] = features
     pickle_info ['training_targets'] = y
-    #pickle.dump(pickle_info, open("./result/ibce/xgb-ibce-paac1-aap-aat-CLS130.pickle", "wb"))
+    pickle.dump(pickle_info, open("./models/xgb-ibce-paac1-aap-aat-CLS130.pickle", "wb"))
     print("Best parameters: ", model.best_params_)
     print("Best AUC_ROC:", model.best_score_)
     predict = model.best_estimator_.predict_proba(x)
@@ -435,8 +428,8 @@ def train(peptides, features, target, pickle_info, dataset):
 
 if __name__ == "__main__":
     dataset = sys.argv[1]
-    pos, neg = readpeptides("./datasets/training/"+dataset+"/pos.txt",
-                            "./datasets/training/"+dataset+"/neg.txt")
+    pos, neg = readpeptides("./"+dataset+"/pos.txt",
+                            "./"+dataset+"/neg.txt")
     #print(pos, neg)
     print(function.__doc__)
     run_training(pos, neg, dataset)
