@@ -40,3 +40,7 @@ python3 xgb_retrain.py  file_path </br>
 <h4>3. Predict</h4>
 
 python3 predict.py  file
+
+<h3>Contact</h3>
+
+Please contact us if you have any further questions.
