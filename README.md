@@ -6,11 +6,9 @@
 ├── datasets/ - source data<br/>
 │&emsp; └── loader.py<br/>
 │ <br/>
-├── models/ - cross-validate model<br/> 
-│&emsp;          aap, aat antigenicity scale<br/>
+├── models/ - cross-validate model; aap, aat antigenicity scale<br/> 
 │ <br/>
-├── pydpi/ - functions for feature calculations<br/>
-│&emsp;          (Instructions for use are detailed in pydpi/manual/UserGuide.pdf)<br/>
+├── pydpi/ - functions for feature calculations (Instructions for use are detailed in pydpi/manual/UserGuide.pdf)<br/>
 │ <br/>
 │ <br/>
 └── utils/ - small utility functions<br/>
