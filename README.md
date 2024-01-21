@@ -4,15 +4,15 @@
 ├── train.py - the model is trained by cross-validation<br/>
 ├── predict.py - predict unknown linear BCE<br/>
 ├── datasets/ - source data<br/>
-│   └── loader.py<br/>
-│<br/>
+│&emsp; └── loader.py<br/>
+│ <br/>
 ├── models/ - cross-validate model<br/> 
-│             aap, aat antigenicity scale<br/>
-│<br/>
+│&emsp;          aap, aat antigenicity scale<br/>
+│ <br/>
 ├── pydpi/ - functions for feature calculations<br/>
-│            (Instructions for use are detailed in pydpi/manual/UserGuide.pdf)<br/>
-│<br/>
-│<br/>
+│&emsp;          (Instructions for use are detailed in pydpi/manual/UserGuide.pdf)<br/>
+│ <br/>
+│ <br/>
 └── utils/ - small utility functions<br/>
     ├── util.py<br/>
     └── logger.py - set log dir for tensorboard and logging output<br/>
