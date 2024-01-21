@@ -17,7 +17,9 @@
 │&emsp;&emsp;├── LBtope/<br/>
 │&emsp;&emsp;├── iBCE-EL_independent/<br/>
 │&emsp;&emsp;├── iBCE-EL_training/<br/>
-│&emsp;&emsp;└── training<br/>
+│&emsp;&emsp;├── training<br/>
+│&emsp;&emsp;├── fasttext_generated_ngram_supervised.py<br/>
+│&emsp;&emsp;└── shuffle_data_1.py<br/>
 ├── models/ - cross-validate model; aap, aat antigenicity scale<br/> 
 └── pydpi/ - functions for feature calculations (Instructions for use are detailed in pydpi/manual/UserGuide.pdf)<br/>
 
